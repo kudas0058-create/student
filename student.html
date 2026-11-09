@@ -274,7 +274,7 @@ function banner(st){
     cls = 'b-warn'; t1 = 'ໃກ້ເຖິງເກນການຂາດຮຽນ';
     t2 = st.canMiss <= 0 ? 'ບໍ່ຄວນຂາດຕື່ມອີກ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)' : 'ຂາດໄດ້ອີກພຽງ 1 ຄາບ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)';
   } else {
-    cls = 'b-ok'; t1 = 'ຢູ່ໃນເກນປອດໄພ';
+    cls = 'b-ok'; t1 = 'ຢູ່ໃນເກນດີ';
     t2 = 'ຂາດໄດ້ອີກ ' + st.canMiss + ' ຄາບ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)';
   }
   return h('div', { class: 'banner ' + cls }, h('b', null, t1), h('span', null, t2));
