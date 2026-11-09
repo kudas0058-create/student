@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="lo" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="google" content="notranslate">
+<meta name="theme-color" content="#eaf0fb">
+<title>ແອັບນັກຮຽນ</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:'Noto Sans Lao','Noto Sans Thai',system-ui,sans-serif;color:#111;min-height:100vh;background:linear-gradient(160deg,#fdfdff 0%,#eaf0fb 55%,#dbe8f9 100%) fixed;-webkit-tap-highlight-color:transparent}
+  body::before{content:"";position:fixed;left:-120px;bottom:70px;width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,#3b7be8,#2a62c9);opacity:.18;z-index:-1}
+  #app{max-width:480px;margin:0 auto;padding:28px 16px 100px}
+  .hidden{display:none !important}
+  .muted{color:#444}.sm{font-size:13px}
+  button{font-family:inherit}
+
+  /* ---------- ເຂົ້າສູ່ລະບົບ ---------- */
+  .ttl{font-size:clamp(28px,8.5vw,40px);font-weight:800;text-align:center;margin:36px 0 24px;text-shadow:0 4px 10px rgba(0,0,0,.18);line-height:1.25}
+  .glass{background:rgba(255,255,255,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:32px;padding:28px 22px;box-shadow:0 10px 40px rgba(60,90,160,.12)}
+  .field{display:flex;flex-direction:column;gap:6px;font-size:16px;font-weight:700;margin-bottom:14px}
+  .field input,.field textarea{width:100%;min-height:46px;padding:10px 12px;border:2px solid #111;border-radius:14px;background:rgba(255,255,255,.85);font-size:16px;font-family:inherit;color:#111}
+  .field textarea{min-height:84px;resize:none}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border:0;border-radius:16px;background:#2a62c9;color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(42,98,201,.3)}
+  .btn[disabled]{opacity:.6}
+  .btn.light{background:rgba(240,245,255,.95);color:#111;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #cfd8ea}
+  .err{color:#b42318;font-size:14px;margin:0 0 10px;min-height:0}
+  .note{margin-top:28px;text-align:center;font-size:14px;color:#222;line-height:1.6}
+
+  /* ---------- ທົ່ວໄປ ---------- */
+  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:12px}
+  .name{font-size:22px;font-weight:700;line-height:1.3}
+  .h1{font-size:24px;font-weight:700;margin:0}
+  .icon{width:44px;height:44px;flex:none;border:0;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;color:#111;cursor:pointer}
+  .card{background:rgba(255,255,255,.7);border-radius:28px;padding:20px;box-shadow:0 10px 30px rgba(60,90,160,.12);margin-bottom:14px}
+  .stack{display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.85);border-radius:16px;padding:10px 14px}
+  .grow{flex:1;min-width:0}
+  .b{font-weight:700}.t15{font-size:15px}.t12{font-size:12px;color:#444}.t13{font-size:13px;color:#444}
+  .pill{padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap}
+  .p-ok{background:#dff3e6;color:#14532d}.p-bad{background:#fde4e1;color:#9b1c12}.p-lv{background:#e0e9fb;color:#1e3a8a}.p-wait{background:#fff4e0;color:#7a3a0a}
+  .ring{width:168px;height:168px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
+  .ring i{width:128px;height:128px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-style:normal}
+  .ring b{font-size:40px;line-height:1.1}
+  .tri{display:flex;gap:10px;margin-top:14px}
+  .tri div{flex:1;background:#fff;border-radius:18px;padding:12px 6px;text-align:center}
+  .tri b{display:block;font-size:26px}
+  .banner{border-radius:18px;padding:12px 16px;margin-bottom:14px}
+  .banner b{display:block;font-size:15px}.banner span{font-size:13px}
+  .b-ok{background:#e3f4ea;color:#14532d}.b-warn{background:#fff4e0;color:#7a3a0a}.b-bad{background:#fde4e1;color:#9b1c12}.b-gray{background:#eceff4;color:#333}
+  .sec{display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px}
+  .link{border:0;background:none;color:#2a62c9;font-size:14px;font-weight:700;cursor:pointer;padding:10px 0}
+  .bar{height:8px;border-radius:999px;background:#d5e0f5;margin:6px 0}
+  .bar i{display:block;height:8px;border-radius:999px;background:#2a62c9}
+  .warnc .bar{background:#f3dcb3}.warnc .bar i{background:#d97706}
+  .warnc{background:#fff4e0 !important}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{min-height:44px;padding:0 18px;border-radius:999px;border:2px solid #cfd8ea;background:rgba(255,255,255,.9);color:#222;font-size:15px;font-weight:600;cursor:pointer}
+  .chip.on{border-color:#2a62c9;background:#2a62c9;color:#fff;font-weight:700}
+  .dbox{width:52px;flex:none;text-align:center;border-radius:14px;padding:6px 0}
+  .dbox b{display:block;font-size:22px;line-height:1.1}.dbox span{font-size:12px}
+  .d-absent{background:#fde4e1;color:#9b1c12}.d-present{background:#dff3e6;color:#14532d}.d-leave{background:#e0e9fb;color:#1e3a8a}
+  .month{font-size:14px;font-weight:700;color:#444;margin:12px 0 8px}
+  .flash{background:#e3f4ea;color:#14532d;border-radius:16px;padding:10px 14px;margin-bottom:12px;font-size:14px;font-weight:600}
+  .info{background:#e6eefc;border-radius:16px;padding:10px 14px;font-size:13px;color:#1e3a8a;line-height:1.5;margin-bottom:12px}
+  .lcard{background:rgba(255,255,255,.88);border-radius:18px;padding:12px 14px;display:flex;flex-direction:column;gap:5px}
+  .lhead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .cls{display:flex;align-items:center;gap:10px;font-size:14px;padding:2px 0}
+  .cls .dot{width:22px;height:22px;flex:none;border-radius:50%;background:#2a62c9;color:#fff;display:flex;align-items:center;justify-content:center}
+  .empty{text-align:center;color:#555;padding:24px 8px;font-size:15px}
+  .foot{text-align:center;margin-top:18px}
+
+  /* ---------- ເມນູລຸ່ມ ---------- */
+  nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);border-top:1px solid #dfe6f3;padding-bottom:env(safe-area-inset-bottom);z-index:5}
+  nav .in{display:flex;max-width:480px;margin:0 auto}
+  nav button{flex:1;min-height:64px;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px;color:#555;cursor:pointer}
+  nav button[aria-current="page"]{color:#2a62c9;font-weight:700}
+  .ico{display:inline-flex}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav id="nav" class="hidden"><div class="in" id="navin"></div></nav>
+
+<script>
+// >>>>>> ວາງລິ້ງ /exec ຂອງ Apps Script ທີ່ນີ້ (ລິ້ງດຽວກັບທີ່ໃຊ້ໃນໜ້າສະແກນ) <<<<<<
+var API_URL = 'PASTE_EXEC_URL_HERE';
+
+var LAO_MONTHS = ['ມັງກອນ','ກຸມພາ','ມີນາ','ເມສາ','ພຶດສະພາ','ມິຖຸນາ','ກໍລະກົດ','ສິງຫາ','ກັນຍາ','ຕຸລາ','ພະຈິກ','ທັນວາ'];
+var LAO_DAYS = ['ອາທິດ','ຈັນ','ອັງຄານ','ພຸດ','ພະຫັດ','ສຸກ','ເສົາ'];
+var TYPES = [
+  { id: 'sick', label: 'ລາປ່ວຍ' },
+  { id: 'family', label: 'ວຽກຄອບຄົວ' },
+  { id: 'school', label: 'ກິດຈະກຳໂຮງຮຽນ' },
+  { id: 'other', label: 'ອື່ນໆ' }
+];
+var NAV = [
+  { id: 'home', label: 'ພາບລວມ', icon: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>' },
+  { id: 'subjects', label: 'ວິຊາ', icon: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/>' },
+  { id: 'history', label: 'ປະຫວັດ', icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>' },
+  { id: 'leave', label: 'ຂໍລາ', icon: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/>' }
+];
+
+var S = { code: '', pass: '', me: null, view: 'home', hist: 'absent', flash: '', form: null };
+var app = document.getElementById('app');
+
+// ---------- ຕົວຊ່ວຍ ----------
+function load(k){ try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+function save(k, v){ try { localStorage.setItem(k, v); } catch (e) {} }
+function del(k){ try { localStorage.removeItem(k); } catch (e) {} }
+function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+function add(e, c){
+  if (c === null || c === undefined || c === false) return;
+  if (Array.isArray(c)) { c.forEach(function(x){ add(e, x); }); return; }
+  e.appendChild(typeof c === 'object' ? c : document.createTextNode(String(c)));
+}
+function h(tag, props){
+  var e = document.createElement(tag);
+  if (props) for (var k in props){
+    if (!Object.prototype.hasOwnProperty.call(props, k)) continue;
+    var v = props[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === 'class') e.className = v;
+    else if (k.indexOf('on') === 0) e[k] = v;
+    else e.setAttribute(k, v);
+  }
+  for (var i = 2; i < arguments.length; i++) add(e, arguments[i]);
+  return e;
+}
+function ico(inner, size){
+  var s = document.createElement('span');
+  s.className = 'ico';
+  s.innerHTML = '<svg width="' + (size || 24) + '" height="' + (size || 24) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
+  return s;
+}
+function clearApp(){ app.innerHTML = ''; }
+
+function parseYMD(s){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? { y: +m[1], m: +m[2], d: +m[3] } : null; }
+function wdOf(s){ var p = parseYMD(s); return p ? new Date(Date.UTC(p.y, p.m - 1, p.d)).getUTCDay() : 0; }
+function fmtDate(s, withDay){
+  var p = parseYMD(s);
+  if (!p) return s || '';
+  var t = p.d + ' ' + LAO_MONTHS[p.m - 1] + ' ' + p.y;
+  return withDay ? t + ' (' + LAO_DAYS[wdOf(s)] + ')' : t;
+}
+function ymdOf(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function todayYMD(){ return ymdOf(new Date()); }
+function pctText(p){ return (p === null || p === undefined) ? '—' : Math.round(p) + '%'; }
+
+// ---------- ເອີ້ນ API ----------
+function call(params){
+  if (!API_URL || API_URL.indexOf('/exec') < 0) return Promise.reject(new Error('noapi'));
+  var u = new URL(API_URL);
+  Object.keys(params).forEach(function(k){ u.searchParams.set(k, params[k]); });
+  return fetch(u.toString()).then(function(r){ return r.json(); });
+}
+
+// ---------- ເມນູລຸ່ມ ----------
+function renderNav(){
+  var nav = document.getElementById('nav');
+  if (!S.me){ nav.classList.add('hidden'); return; }
+  nav.classList.remove('hidden');
+  var box = document.getElementById('navin');
+  box.innerHTML = '';
+  var cur = S.view === 'form' ? 'leave' : S.view;
+  NAV.forEach(function(n){
+    var b = h('button', { type: 'button', 'aria-current': n.id === cur ? 'page' : null, onclick: function(){ go(n.id); } }, ico(n.icon), h('span', null, n.label));
+    box.appendChild(b);
+  });
+}
+function go(v){
+  S.view = v;
+  if (v !== 'leave') S.flash = '';
+  render();
+  window.scrollTo(0, 0);
+}
+
+// ---------- ເຂົ້າສູ່ລະບົບ ----------
+function renderLogin(msg){
+  S.me = null;
+  renderNav();
+  clearApp();
+  var code = h('input', { id: 'l-code', type: 'text', inputmode: 'numeric', autocomplete: 'username', value: S.code || load('sCode') });
+  var pass = h('input', { id: 'l-pass', type: 'password', inputmode: 'numeric', autocomplete: 'current-password' });
+  var err = h('div', { class: 'err', role: 'alert' }, msg || '');
+  var btn = h('button', { class: 'btn', type: 'submit' }, 'ເຂົ້າສູ່ລະບົບ');
+  var form = h('form', { onsubmit: function(ev){
+    ev.preventDefault();
+    var c = code.value.trim(), p = pass.value.trim();
+    if (!c || !p){ err.textContent = 'ກະລຸນາຕື່ມໃຫ້ຄົບທັງ 2 ຊ່ອງ'; return; }
+    btn.disabled = true; err.textContent = 'ກຳລັງກວດສອບ...';
+    S.code = c; S.pass = p;
+    loadMe(function(msg2){ btn.disabled = false; err.textContent = msg2 || ''; });
+  } },
+    h('label', { class: 'field' }, h('span', null, 'ລະຫັດນັກຮຽນ'), code),
+    h('label', { class: 'field' }, h('span', null, 'ລະຫັດຜ່ານສ່ວນຕົວ'), pass),
+    err, btn);
+  app.appendChild(h('div', null,
+    h('h1', { class: 'ttl' }, 'ແອັບນັກຮຽນ'),
+    h('div', { class: 'glass' }, form),
+    h('div', { class: 'note' }, 'ເບິ່ງການມາຮຽນ ແລະ ຂໍລາໄດ້ທີ່ນີ້', h('br'), 'ຖ້າລືມລະຫັດຜ່ານ ໃຫ້ຖາມຄະນະຫ້ອງ ຫຼື ອາຈານ')));
+}
+
+function loginMessage(r){
+  if (r && r.status === 'locked') return 'ໃສ່ຜິດຫຼາຍເກີນໄປ ກະລຸນາລອງໃໝ່ອີກ 10 ນາທີ';
+  return 'ລະຫັດນັກຮຽນ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ';
+}
+function netMessage(e){
+  if (e && e.message === 'noapi') return 'ຍັງບໍ່ໄດ້ຕັ້ງລິ້ງລະບົບ (API_URL) ໃນໄຟລ໌ student.html';
+  return 'ເຊື່ອມຕໍ່ບໍ່ໄດ້ ກວດອິນເຕີເນັດແລ້ວລອງໃໝ່';
+}
+
+// ໂຫຼດຂໍ້ມູນຂອງຂ້ອຍ. onFail(msg) ໃຊ້ຕອນເຂົ້າສູ່ລະບົບ
+function loadMe(onFail){
+  call({ api: 'me', code: S.code, pass: S.pass }).then(function(r){
+    if (r.status === 'ok'){
+      S.me = r;
+      save('sCode', S.code); save('sPass', S.pass);
+      render();
+    } else if (r.status === 'badlogin' || r.status === 'locked'){
+      del('sPass'); S.pass = '';
+      if (onFail) onFail(loginMessage(r)); else renderLogin(loginMessage(r));
+    } else {
+      var m = 'ເກີດຂໍ້ຜິດພາດ ກະລຸນາລອງໃໝ່';
+      if (onFail) onFail(m); else renderError(m);
+    }
+  }).catch(function(e){
+    if (onFail) onFail(netMessage(e)); else renderError(netMessage(e));
+  });
+}
+function refresh(){ loadMe(); }
+
+function renderError(msg){
+  clearApp();
+  app.appendChild(h('div', { class: 'card' },
+    h('div', { class: 'b t15' }, msg),
+    h('button', { class: 'btn', type: 'button', style: 'margin-top:14px', onclick: function(){ clearApp(); app.appendChild(h('div', { class: 'empty' }, 'ກຳລັງໂຫຼດ...')); loadMe(); } }, 'ລອງໃໝ່')));
+}
+
+function logout(){
+  del('sPass'); S.pass = ''; S.me = null; S.form = null; S.view = 'home';
+  renderLogin('');
+}
+
+// ---------- ສະແດງໜ້າ ----------
+function render(){
+  if (!S.me) return;
+  renderNav();
+  clearApp();
+  if (S.view === 'subjects') app.appendChild(viewSubjects());
+  else if (S.view === 'history') app.appendChild(viewHistory());
+  else if (S.view === 'leave') app.appendChild(viewLeave());
+  else if (S.view === 'form') app.appendChild(viewForm());
+  else app.appendChild(viewHome());
+}
+
+function statusPill(st){
+  if (st === 'present') return h('div', { class: 'pill p-ok' }, 'ມາຮຽນ');
+  if (st === 'leave') return h('div', { class: 'pill p-lv' }, 'ລາ');
+  return h('div', { class: 'pill p-bad' }, 'ຂາດ');
+}
+
+// ---------- 1) ພາບລວມ ----------
+function banner(st){
+  var cls, t1, t2;
+  if (st.present + st.absent === 0){
+    cls = 'b-gray'; t1 = 'ຍັງບໍ່ມີຂໍ້ມູນການຮຽນ'; t2 = 'ເມື່ອມີການເຊັກຊື່ ສະຖິຕິຈະສະແດງຢູ່ບ່ອນນີ້';
+  } else if (st.absentPct > st.maxAbsentPct){
+    cls = 'b-bad'; t1 = 'ເກີນເກນການຂາດຮຽນ';
+    t2 = 'ຂາດ ' + Math.round(st.absentPct) + '% ເກີນເກນ ' + st.maxAbsentPct + '% ກະລຸນາຕິດຕໍ່ອາຈານ';
+  } else if (st.canMiss <= 1){
+    cls = 'b-warn'; t1 = 'ໃກ້ເຖິງເກນການຂາດຮຽນ';
+    t2 = st.canMiss <= 0 ? 'ບໍ່ຄວນຂາດຕື່ມອີກ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)' : 'ຂາດໄດ້ອີກພຽງ 1 ຄາບ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)';
+  } else {
+    cls = 'b-ok'; t1 = 'ຢູ່ໃນເກນປອດໄພ';
+    t2 = 'ຂາດໄດ້ອີກ ' + st.canMiss + ' ຄາບ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)';
+  }
+  return h('div', { class: 'banner ' + cls }, h('b', null, t1), h('span', null, t2));
+}
+
+function itemRow(it){
+  return h('div', { class: 'row' },
+    h('div', { class: 'b t15', style: 'width:48px' }, it.label.slice(0, 5)),
+    h('div', { class: 'grow' }, h('div', { class: 'b t15' }, it.subject), h('div', { class: 't12' }, fmtDate(it.date, true))),
+    statusPill(it.status));
+}
+
+function viewHome(){
+  var m = S.me, st = m.stats, p = st.pct;
+  var deg = (p === null || p === undefined) ? 0 : p;
+  var root = h('div', null);
+  root.appendChild(h('div', { class: 'top' },
+    h('div', null, h('div', { class: 'muted t15' }, 'ສະບາຍດີ'), h('div', { class: 'name' }, m.name), h('div', { class: 'muted sm' }, 'ລະຫັດ ' + m.code)),
+    h('button', { class: 'icon', type: 'button', 'aria-label': 'ໂຫຼດຂໍ້ມູນໃໝ່', onclick: refresh }, ico('<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>', 22))));
+  root.appendChild(h('div', { class: 'card' },
+    h('div', { class: 'ring', style: 'background:conic-gradient(#2a62c9 0 ' + deg + '%, #d5e0f5 ' + deg + '% 100%)' },
+      h('i', null, h('b', null, pctText(p)), h('span', { class: 'muted t15' }, 'ມາຮຽນ'))),
+    h('div', { class: 'muted sm', style: 'text-align:center' }, 'ຈາກທັງໝົດ ' + st.total + ' ຄາບ (ຄາບທີ່ລາອະນຸມັດ ບໍ່ນັບເປັນການຂາດ)'),
+    h('div', { class: 'tri' },
+      h('div', null, h('b', { style: 'color:#15803d' }, st.present), h('span', { class: 't13' }, 'ມາຮຽນ (ຄາບ)')),
+      h('div', null, h('b', { style: 'color:#b42318' }, st.absent), h('span', { class: 't13' }, 'ຂາດ (ຄາບ)')),
+      h('div', null, h('b', { style: 'color:#1e3a8a' }, st.leave), h('span', { class: 't13' }, 'ລາ (ຄາບ)')))));
+  root.appendChild(banner(st));
+
+  var pend = m.leaves.filter(function(l){ return l.status === 'pending'; }).length;
+  if (pend) root.appendChild(h('div', { class: 'info' }, 'ເຈົ້າມີຄຳຂໍລາທີ່ລໍຖ້າການພິຈາລະນາ ' + pend + ' ລາຍການ'));
+
+  root.appendChild(h('div', { class: 'sec' }, h('div', { class: 'b', style: 'font-size:17px' }, 'ຄາບຫຼ້າສຸດ'), h('button', { class: 'link', type: 'button', onclick: function(){ S.hist = 'all'; go('history'); } }, 'ເບິ່ງທັງໝົດ')));
+  var recent = m.items.slice(0, 3);
+  if (!recent.length) root.appendChild(h('div', { class: 'empty' }, 'ຍັງບໍ່ມີຂໍ້ມູນ'));
+  else root.appendChild(h('div', { class: 'stack' }, recent.map(itemRow)));
+  root.appendChild(h('div', { class: 'foot' }, h('button', { class: 'link', type: 'button', onclick: logout }, 'ອອກຈາກລະບົບ')));
+  return root;
+}
+
+// ---------- 2) ວິຊາ ----------
+function viewSubjects(){
+  var m = S.me, root = h('div', null);
+  root.appendChild(h('div', { style: 'margin-bottom:12px' }, h('h1', { class: 'h1' }, 'ວິຊາຮຽນ'), h('div', { class: 'muted sm' }, 'ການມາຮຽນແຍກຕາມວິຊາ · ທັງໝົດ ' + m.subjects.length + ' ວິຊາ')));
+  if (!m.subjects.length){ root.appendChild(h('div', { class: 'empty' }, 'ຍັງບໍ່ມີຂໍ້ມູນ')); return root; }
+  var list = h('div', { class: 'stack' });
+  m.subjects.forEach(function(s){
+    var warn = s.absentPct > m.stats.maxAbsentPct;
+    var tot = s.present + s.absent;
+    var sub = 'ມາ ' + s.present + ' / ' + tot + ' ຄາບ · ຂາດ ' + s.absent + (s.leave ? ' · ລາ ' + s.leave : '') + (warn ? ' · ຄວນລະວັງ' : '');
+    list.appendChild(h('div', { class: 'lcard' + (warn ? ' warnc' : '') },
+      h('div', { class: 'lhead' }, h('div', { class: 'b t15' }, s.name), h('div', { class: 'b', style: 'font-size:17px' + (warn ? ';color:#92400e' : '') }, pctText(s.pct))),
+      h('div', { class: 'bar' }, h('i', { style: 'width:' + (s.pct === null ? 0 : s.pct) + '%' })),
+      h('div', { class: 't12' }, sub)));
+  });
+  root.appendChild(list);
+  return root;
+}
+
+// ---------- 3) ປະຫວັດ ----------
+function viewHistory(){
+  var m = S.me, root = h('div', null);
+  var absent = m.items.filter(function(i){ return i.status === 'absent'; });
+  root.appendChild(h('div', { style: 'margin-bottom:12px' }, h('h1', { class: 'h1' }, 'ປະຫວັດການມາຮຽນ'),
+    h('div', { class: 'muted sm' }, 'ຂາດທັງໝົດ ' + m.stats.absent + ' ຄາບ ຈາກ ' + m.stats.total + ' ຄາບ')));
+  var chips = h('div', { class: 'chips', style: 'margin-bottom:6px' });
+  [['absent', 'ຂາດຮຽນ (' + absent.length + ')'], ['all', 'ທັງໝົດ (' + m.items.length + ')']].forEach(function(c){
+    chips.appendChild(h('button', { type: 'button', class: 'chip' + (S.hist === c[0] ? ' on' : ''), 'aria-pressed': S.hist === c[0] ? 'true' : 'false', onclick: function(){ S.hist = c[0]; render(); } }, c[1]));
+  });
+  root.appendChild(chips);
+  var items = S.hist === 'absent' ? absent : m.items;
+  if (!items.length){ root.appendChild(h('div', { class: 'empty' }, S.hist === 'absent' ? 'ຍັງບໍ່ມີການຂາດຮຽນ 🎉' : 'ຍັງບໍ່ມີຂໍ້ມູນ')); return root; }
+  var lastMonth = '', group = null;
+  items.forEach(function(it){
+    var p = parseYMD(it.date);
+    var mk = p ? LAO_MONTHS[p.m - 1] + ' ' + p.y : it.date;
+    if (mk !== lastMonth){
+      lastMonth = mk;
+      root.appendChild(h('div', { class: 'month' }, mk));
+      group = h('div', { class: 'stack' });
+      root.appendChild(group);
+    }
+    group.appendChild(h('div', { class: 'row' },
+      h('div', { class: 'dbox d-' + it.status }, h('b', null, p ? p.d : ''), h('span', null, LAO_DAYS[wdOf(it.date)])),
+      h('div', { class: 'grow' }, h('div', { class: 'b t15' }, it.subject), h('div', { class: 't13' }, it.label + (it.room ? ' · ຫ້ອງ ' + it.room : ''))),
+      statusPill(it.status)));
+  });
+  return root;
+}
+
+// ---------- 4) ຂໍລາ (ລາຍການ) ----------
+function leavePill(st){
+  if (st === 'approved') return h('div', { class: 'pill p-ok' }, 'ອະນຸມັດແລ້ວ');
+  if (st === 'rejected') return h('div', { class: 'pill p-bad' }, 'ບໍ່ອະນຸມັດ');
+  return h('div', { class: 'pill p-wait' }, 'ລໍຖ້າພິຈາລະນາ');
+}
+function viewLeave(){
+  var m = S.me, root = h('div', null);
+  root.appendChild(h('div', { style: 'margin-bottom:12px' }, h('h1', { class: 'h1' }, 'ຂໍລາ'), h('div', { class: 'muted sm' }, 'ຄຳຂໍລາຂອງຂ້ອຍ · ທັງໝົດ ' + m.leaves.length + ' ລາຍການ')));
+  if (S.flash) root.appendChild(h('div', { class: 'flash', role: 'status' }, S.flash));
+  root.appendChild(h('button', { class: 'btn', type: 'button', style: 'margin-bottom:12px', onclick: function(){ S.form = null; go('form'); } }, ico('<path d="M12 5v14"/><path d="M5 12h14"/>', 22), 'ຂໍລາໃໝ່'));
+  root.appendChild(h('div', { class: 'info' }, 'ລາທີ່ອະນຸມັດແລ້ວ ຈະບໍ່ນັບເປັນການຂາດຮຽນ ແລະ ບໍ່ມີຜົນຕໍ່ % ການມາຮຽນ'));
+  if (!m.leaves.length){ root.appendChild(h('div', { class: 'empty' }, 'ຍັງບໍ່ມີຄຳຂໍລາ')); return root; }
+  var list = h('div', { class: 'stack' });
+  m.leaves.forEach(function(l){
+    var when = fmtDate(l.from, true) + (l.to !== l.from ? ' – ' + fmtDate(l.to, true) : '');
+    list.appendChild(h('div', { class: 'lcard' },
+      h('div', { class: 'lhead' }, h('div', { class: 'b', style: 'font-size:16px' }, l.type), leavePill(l.status)),
+      h('div', { class: 'b t15' }, when),
+      h('div', { class: 't13' }, 'ກະທົບ ' + l.classes + ' ຄາບ · ' + l.reason),
+      h('div', { class: 't12' }, 'ສົ່ງເມື່ອ ' + l.at + (l.note ? ' · ໝາຍເຫດ: ' + l.note : ''))));
+  });
+  root.appendChild(list);
+  return root;
+}
+
+// ---------- 5) ແບບຟອມຂໍລາ ----------
+function viewForm(){
+  if (!S.form) S.form = { type: 'sick', from: todayYMD(), to: todayYMD(), reason: '' };
+  var f = S.form, root = h('div', null), pv = 0;
+  root.appendChild(h('div', { class: 'top', style: 'justify-content:flex-start;align-items:center;gap:10px' },
+    h('button', { class: 'icon', type: 'button', 'aria-label': 'ກັບຄືນ', onclick: function(){ S.form = null; go('leave'); } }, ico('<path d="M15 5l-7 7 7 7"/>', 22)),
+    h('h1', { class: 'h1' }, 'ຂໍລາຮຽນ')));
+
+  // ປະເພດ
+  var chips = h('div', { class: 'chips' });
+  TYPES.forEach(function(t){
+    chips.appendChild(h('button', { type: 'button', class: 'chip' + (f.type === t.id ? ' on' : ''), 'aria-pressed': f.type === t.id ? 'true' : 'false', onclick: function(){
+      f.type = t.id;
+      Array.prototype.forEach.call(chips.children, function(c, i){
+        var on = TYPES[i].id === f.type;
+        c.className = 'chip' + (on ? ' on' : '');
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    } }, t.label));
+  });
+  root.appendChild(h('div', { style: 'margin-bottom:14px' }, h('div', { class: 'b t15', style: 'margin-bottom:8px' }, 'ປະເພດການລາ'), chips));
+
+  // ວັນທີ
+  var minD = ymdOf(new Date(Date.now() - 30 * 86400000));
+  var inFrom = h('input', { type: 'date', min: minD });
+  var inTo = h('input', { type: 'date', min: f.from });
+  inFrom.value = f.from; inTo.value = f.to;
+  var box = h('div', { class: 'card', style: 'padding:14px;border-radius:18px' });
+
+  function loadPreview(){
+    var my = ++pv;
+    box.innerHTML = '';
+    if (!f.from || !f.to){ box.appendChild(h('div', { class: 't13' }, 'ເລືອກວັນທີເລີ່ມ ແລະ ວັນທີສິ້ນສຸດ')); return; }
+    if (f.to < f.from){ box.appendChild(h('div', { class: 't13' }, 'ວັນທີສິ້ນສຸດຕ້ອງບໍ່ກ່ອນວັນທີເລີ່ມ')); return; }
+    box.appendChild(h('div', { class: 't13' }, 'ກຳລັງໂຫຼດຄາບຮຽນ...'));
+    call({ api: 'leavePreview', code: S.code, pass: S.pass, from: f.from, to: f.to }).then(function(r){
+      if (my !== pv) return;
+      box.innerHTML = '';
+      if (r.status === 'badrange'){ box.appendChild(h('div', { class: 't13' }, 'ຊ່ວງວັນທີບໍ່ຖືກຕ້ອງ (ບໍ່ເກີນ 30 ວັນ ແລະ ຍ້ອນຫຼັງໄດ້ບໍ່ເກີນ 30 ວັນ)')); return; }
+      if (r.status !== 'ok'){ box.appendChild(h('div', { class: 't13' }, 'ໂຫຼດບໍ່ສຳເລັດ')); return; }
+      box.appendChild(h('div', { class: 'b t15', style: 'margin-bottom:8px' }, 'ຄາບຮຽນທີ່ກະທົບ (' + r.classes.length + ')'));
+      if (!r.classes.length){ box.appendChild(h('div', { class: 't13' }, 'ບໍ່ມີຄາບຮຽນໃນຊ່ວງວັນທີນີ້')); return; }
+      var shown = r.classes.slice(0, 14), lastD = '';
+      shown.forEach(function(c){
+        if (c.date !== lastD){
+          lastD = c.date;
+          box.appendChild(h('div', { class: 't12 b', style: 'margin:8px 0 2px' }, fmtDate(c.date, true)));
+        }
+        box.appendChild(h('div', { class: 'cls' },
+          h('div', { class: 'dot' }, ico('<path d="M5 12l5 5 9-10"/>', 14)),
+          h('div', { class: 'grow' }, h('b', null, c.label.slice(0, 5)), ' ' + c.subject),
+          h('div', { class: 't13' }, c.room || '')));
+      });
+      if (r.classes.length > shown.length) box.appendChild(h('div', { class: 't12', style: 'margin-top:6px' }, 'ແລະ ອີກ ' + (r.classes.length - shown.length) + ' ຄາບ'));
+    }).catch(function(){
+      if (my !== pv) return;
+      box.innerHTML = '';
+      box.appendChild(h('div', { class: 't13' }, 'ເຊື່ອມຕໍ່ບໍ່ໄດ້'));
+    });
+  }
+  inFrom.onchange = function(){
+    f.from = inFrom.value;
+    if (f.from && (!f.to || f.to < f.from)){ f.to = f.from; inTo.value = f.to; }
+    inTo.min = f.from || minD;
+    loadPreview();
+  };
+  inTo.onchange = function(){ f.to = inTo.value; loadPreview(); };
+  root.appendChild(h('div', { style: 'display:flex;gap:10px' },
+    h('label', { class: 'field', style: 'flex:1;min-width:0' }, h('span', null, 'ເລີ່ມວັນທີ'), inFrom),
+    h('label', { class: 'field', style: 'flex:1;min-width:0' }, h('span', null, 'ເຖິງວັນທີ'), inTo)));
+  root.appendChild(box);
+
+  // ເຫດຜົນ
+  var ta = h('textarea', { maxlength: '300', placeholder: 'ເຊັ່ນ: ເປັນໄຂ້ ແລະ ຕ້ອງໄປພົບແພດ' });
+  ta.value = f.reason;
+  ta.oninput = function(){ f.reason = ta.value; };
+  root.appendChild(h('label', { class: 'field', style: 'margin-top:14px' }, h('span', null, 'ເຫດຜົນ'), ta));
+
+  var err = h('div', { class: 'err', role: 'alert' });
+  var btn = h('button', { class: 'btn', type: 'button' }, 'ສົ່ງຄຳຂໍ');
+  btn.onclick = function(){
+    err.textContent = '';
+    if (!f.from || !f.to || f.to < f.from){ err.textContent = 'ກະລຸນາເລືອກວັນທີໃຫ້ຖືກຕ້ອງ'; return; }
+    if (f.reason.trim().length < 3){ err.textContent = 'ກະລຸນາໃສ່ເຫດຜົນ'; return; }
+    btn.disabled = true; btn.textContent = 'ກຳລັງສົ່ງ...';
+    call({ api: 'leaveSubmit', code: S.code, pass: S.pass, type: f.type, from: f.from, to: f.to, reason: f.reason.trim() }).then(function(r){
+      if (r.status === 'ok'){
+        S.form = null; S.flash = 'ສົ່ງຄຳຂໍແລ້ວ ລໍຖ້າຄະນະຫ້ອງພິຈາລະນາ'; S.view = 'leave';
+        loadMe();
+        return;
+      }
+      btn.disabled = false; btn.textContent = 'ສົ່ງຄຳຂໍ';
+      var msgs = {
+        badrange: 'ຊ່ວງວັນທີບໍ່ຖືກຕ້ອງ (ບໍ່ເກີນ 30 ວັນ ແລະ ຍ້ອນຫຼັງໄດ້ບໍ່ເກີນ 30 ວັນ)',
+        noreason: 'ກະລຸນາໃສ່ເຫດຜົນ',
+        overlap: 'ເຈົ້າມີຄຳຂໍລາທີ່ທັບຊ້ອນກັບວັນທີນີ້ແລ້ວ',
+        toomany: 'ມີຄຳຂໍທີ່ລໍຖ້າຫຼາຍເກີນໄປ ກະລຸນາລໍຖ້າການພິຈາລະນາກ່ອນ',
+        busy: 'ລະບົບຍຸ່ງ ກະລຸນາລອງໃໝ່',
+        badlogin: 'ຕ້ອງເຂົ້າສູ່ລະບົບໃໝ່',
+        locked: 'ໃສ່ຜິດຫຼາຍເກີນໄປ ກະລຸນາລອງໃໝ່ພາຍຫຼັງ'
+      };
+      err.textContent = msgs[r.status] || 'ສົ່ງບໍ່ສຳເລັດ ກະລຸນາລອງໃໝ່';
+    }).catch(function(e){
+      btn.disabled = false; btn.textContent = 'ສົ່ງຄຳຂໍ';
+      err.textContent = netMessage(e);
+    });
+  };
+  root.appendChild(err);
+  root.appendChild(btn);
+  root.appendChild(h('div', { class: 't12', style: 'text-align:center;margin-top:10px;line-height:1.5' }, 'ຄະນະຫ້ອງ ຈະພິຈາລະນາ · ເຈົ້າຈະເຫັນຜົນໃນໜ້າ ຂໍລາ', h('br'), 'ຖ້າເປັນການລາປ່ວຍ ໃຫ້ເອົາໃບຢັ້ງຢືນແພດໄປສະແດງຕໍ່ອາຈານ'));
+  loadPreview();
+  return root;
+}
+
+// ---------- ເລີ່ມຕົ້ນ ----------
+(function boot(){
+  S.code = load('sCode'); S.pass = load('sPass');
+  if (S.code && S.pass){
+    app.appendChild(h('div', { class: 'empty' }, 'ກຳລັງໂຫຼດ...'));
+    loadMe();
+  } else {
+    renderLogin('');
+  }
+})();
+</script>
+</body>
+</html>
