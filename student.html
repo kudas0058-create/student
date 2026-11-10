@@ -194,8 +194,8 @@ function renderLogin(msg){
     S.code = c; S.pass = p;
     loadMe(function(msg2){ btn.disabled = false; err.textContent = msg2 || ''; });
   } },
-    h('label', { class: 'field' }, h('span', null, 'ລະຫັດນັກຮຽນ'), code),
-    h('label', { class: 'field' }, h('span', null, 'ລະຫັດຜ່ານສ່ວນຕົວ'), pass),
+    h('label', { class: 'field' }, h('span', null, 'ID'), code),
+    h('label', { class: 'field' }, h('span', null, 'ລະຫັດຜ່ານ'), pass),
     err, btn);
   app.appendChild(h('div', null,
     h('h1', { class: 'ttl' }, 'student'),
