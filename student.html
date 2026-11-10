@@ -198,9 +198,9 @@ function renderLogin(msg){
     h('label', { class: 'field' }, h('span', null, 'ລະຫັດຜ່ານສ່ວນຕົວ'), pass),
     err, btn);
   app.appendChild(h('div', null,
-    h('h1', { class: 'ttl' }, 'ແອັບນັກຮຽນ'),
+    h('h1', { class: 'ttl' }, 'student'),
     h('div', { class: 'glass' }, form),
-    h('div', { class: 'note' }, 'ເບິ່ງການມາຮຽນ ແລະ ຂໍລາໄດ້ທີ່ນີ້', h('br'), 'ຖ້າລືມລະຫັດຜ່ານ ໃຫ້ຖາມຄະນະຫ້ອງ ຫຼື ອາຈານ')));
+    h('div', { class: 'note' }, 'ເບິ່ງການມາຮຽນ ແລະ ຂໍລາໄດ້ທີ່ນີ້', h('br'), 'ຖ້າລືມລະຫັດຜ່ານໃຫ້ຖາມ ຄະນະຫ້ອງ')));
 }
 
 function loginMessage(r){
@@ -269,7 +269,7 @@ function banner(st){
     cls = 'b-gray'; t1 = 'ຍັງບໍ່ມີຂໍ້ມູນການຮຽນ'; t2 = 'ເມື່ອມີການເຊັກຊື່ ສະຖິຕິຈະສະແດງຢູ່ບ່ອນນີ້';
   } else if (st.absentPct > st.maxAbsentPct){
     cls = 'b-bad'; t1 = 'ເກີນເກນການຂາດຮຽນ';
-    t2 = 'ຂາດ ' + Math.round(st.absentPct) + '% ເກີນເກນ ' + st.maxAbsentPct + '% ກະລຸນາຕິດຕໍ່ອາຈານ';
+    t2 = 'ຂາດ ' + Math.round(st.absentPct) + '% ເກີນເກນ ' + st.maxAbsentPct + '% ກະລຸນາຕິດຕໍ່ຄະນະຫ້ອງ';
   } else if (st.canMiss <= 1){
     cls = 'b-warn'; t1 = 'ໃກ້ເຖິງເກນການຂາດຮຽນ';
     t2 = st.canMiss <= 0 ? 'ບໍ່ຄວນຂາດຕື່ມອີກ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)' : 'ຂາດໄດ້ອີກພຽງ 1 ຄາບ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)';
