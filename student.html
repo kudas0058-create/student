@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="google" content="notranslate">
 <meta name="theme-color" content="#eaf0fb">
-<title>ແອັບນັກຮຽນ</title>
+<title>student</title>
 <style>
   *{box-sizing:border-box}
   html,body{margin:0}
@@ -343,8 +343,8 @@ function monthCard(){
   else rows.forEach(function(r){ card.appendChild(r); });
   card.appendChild(h('div', { class: 'lg' },
     h('span', null, h('i', { style: 'background:#22a05a' }), 'ມາ'), h('span', null, h('i', { style: 'background:#e5584b' }), 'ຂາດ'),
-    h('span', null, h('i', { style: 'background:#3b6fd8' }), 'ລາ'), h('span', null, h('i', { style: 'background:#dfe5f1' }), 'ຍັງບໍ່ເຖິງ')));
-  card.appendChild(h('div', { class: 'muted', style: 'font-size:12px;margin-top:8px' }, 'ເລກ ຂາດ/ທັງເດືອນ ນັບຕາມຕາຕະລາງຮຽນ · ຄາບທີ່ລາອະນຸມັດ ບໍ່ນັບເປັນການຂາດ'));
+    h('span', null, h('i', { style: 'background:#3b6fd8' }), 'ລາ'), h('span', null, h('i', { style: 'background:#dfe5f1' }), 'ຍັງບໍ່ຮອດຊົ່ວໂມງຮຽນ')));
+  card.appendChild(h('div', { class: 'muted', style: 'font-size:12px;margin-top:8px' }, 'ຂໍ້ມູນຂ້າງເຖີງນີ້ແມ່ນອີ້ງຕາມຕາຕະລາງຮຽນ · ຊົ່ວໂມງທີ່ຂໍລາໄດ້ຮັບການອະນຸມັດ ບໍ່ນັບເປັນການຂາດ'));
   return card;
 }
 
@@ -360,7 +360,7 @@ function viewHome(){
   var pend = m.leaves.filter(function(l){ return l.status === 'pending'; }).length;
   if (pend) root.appendChild(h('div', { class: 'info' }, 'ເຈົ້າມີຄຳຂໍລາທີ່ລໍຖ້າການພິຈາລະນາ ' + pend + ' ລາຍການ'));
 
-  root.appendChild(h('div', { class: 'sec' }, h('div', { class: 'b', style: 'font-size:17px' }, 'ຄາບຫຼ້າສຸດ'), h('button', { class: 'link', type: 'button', onclick: function(){ S.hist = 'all'; go('history'); } }, 'ເບິ່ງທັງໝົດ')));
+  root.appendChild(h('div', { class: 'sec' }, h('div', { class: 'b', style: 'font-size:17px' }, 'ຊົ່ວໂມງຫຼ້າສຸດ'), h('button', { class: 'link', type: 'button', onclick: function(){ S.hist = 'all'; go('history'); } }, 'ເບິ່ງທັງໝົດ')));
   var recent = m.items.slice(0, 3);
   if (!recent.length) root.appendChild(h('div', { class: 'empty' }, 'ຍັງບໍ່ມີຂໍ້ມູນ'));
   else root.appendChild(h('div', { class: 'stack' }, recent.map(itemRow)));
@@ -520,8 +520,8 @@ function viewForm(){
       box.innerHTML = '';
       if (r.status === 'badrange'){ box.appendChild(h('div', { class: 't13' }, 'ຊ່ວງວັນທີບໍ່ຖືກຕ້ອງ (ບໍ່ເກີນ 30 ວັນ ແລະ ຍ້ອນຫຼັງໄດ້ບໍ່ເກີນ 30 ວັນ)')); return; }
       if (r.status !== 'ok'){ box.appendChild(h('div', { class: 't13' }, 'ໂຫຼດບໍ່ສຳເລັດ')); return; }
-      box.appendChild(h('div', { class: 'b t15', style: 'margin-bottom:8px' }, 'ຄາບຮຽນທີ່ກະທົບ (' + r.classes.length + ')'));
-      if (!r.classes.length){ box.appendChild(h('div', { class: 't13' }, 'ບໍ່ມີຄາບຮຽນໃນຊ່ວງວັນທີນີ້')); return; }
+      box.appendChild(h('div', { class: 'b t15', style: 'margin-bottom:8px' }, 'ວີຊາທີ່ກະທົບ (' + r.classes.length + ')'));
+      if (!r.classes.length){ box.appendChild(h('div', { class: 't13' }, 'ບໍ່ມີຄາບຮຽນໃນຊ່ວງມື້ນີ້')); return; }
       var shown = r.classes.slice(0, 14), lastD = '';
       shown.forEach(function(c){
         if (c.date !== lastD){
@@ -549,7 +549,7 @@ function viewForm(){
   inTo.onchange = function(){ f.to = inTo.value; loadPreview(); };
   root.appendChild(h('div', { style: 'display:flex;gap:10px' },
     h('label', { class: 'field', style: 'flex:1;min-width:0' }, h('span', null, 'ເລີ່ມວັນທີ'), inFrom),
-    h('label', { class: 'field', style: 'flex:1;min-width:0' }, h('span', null, 'ເຖິງວັນທີ'), inTo)));
+    h('label', { class: 'field', style: 'flex:1;min-width:0' }, h('span', null, 'ຮອດວັນທີ'), inTo)));
   root.appendChild(box);
 
   // ເຫດຜົນ
@@ -577,7 +577,7 @@ function viewForm(){
         noreason: 'ກະລຸນາໃສ່ເຫດຜົນ',
         overlap: 'ເຈົ້າມີຄຳຂໍລາທີ່ທັບຊ້ອນກັບວັນທີນີ້ແລ້ວ',
         toomany: 'ມີຄຳຂໍທີ່ລໍຖ້າຫຼາຍເກີນໄປ ກະລຸນາລໍຖ້າການພິຈາລະນາກ່ອນ',
-        busy: 'ລະບົບຍຸ່ງ ກະລຸນາລອງໃໝ່',
+        busy: 'ກະລຸນາລອງໃໝ່',
         badlogin: 'ຕ້ອງເຂົ້າສູ່ລະບົບໃໝ່',
         locked: 'ໃສ່ຜິດຫຼາຍເກີນໄປ ກະລຸນາລອງໃໝ່ພາຍຫຼັງ'
       };
