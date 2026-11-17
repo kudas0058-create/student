@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="google" content="notranslate">
 <meta name="theme-color" content="#eaf0fb">
-<title>student</title>
+<title>ແອັບນັກຮຽນ</title>
 <style>
   *{box-sizing:border-box}
   html,body{margin:0}
@@ -43,6 +43,12 @@
   .ring{width:168px;height:168px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
   .ring i{width:128px;height:128px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-style:normal}
   .ring b{font-size:40px;line-height:1.1}
+  .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+  .sj{background:#fff;border-radius:16px;padding:10px 14px;margin-top:8px}.sj.w{background:#fff4f2;box-shadow:inset 4px 0 0 #e5584b}
+  .sjh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .dots{display:flex;gap:6px;margin-top:8px}.dt{flex:1;max-width:44px;height:10px;border-radius:999px;background:#dfe5f1}
+  .dt.ok{background:#22a05a}.dt.bad{background:#e5584b}.dt.lv{background:#3b6fd8}
+  .lg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:#444;margin-top:12px}.lg i{display:inline-block;width:14px;height:8px;border-radius:99px;margin-right:4px}
   .tri{display:flex;gap:10px;margin-top:14px}
   .tri div{flex:1;background:#fff;border-radius:18px;padding:12px 6px;text-align:center}
   .tri b{display:block;font-size:26px}
@@ -194,18 +200,18 @@ function renderLogin(msg){
     S.code = c; S.pass = p;
     loadMe(function(msg2){ btn.disabled = false; err.textContent = msg2 || ''; });
   } },
-    h('label', { class: 'field' }, h('span', null, 'ID'), code),
+    h('label', { class: 'field' }, h('span', null, 'DI'), code),
     h('label', { class: 'field' }, h('span', null, 'ລະຫັດຜ່ານ'), pass),
     err, btn);
   app.appendChild(h('div', null,
-    h('h1', { class: 'ttl' }, 'student'),
+    h('h1', { class: 'ttl' }, 'ແອັບນັກຮຽນ'),
     h('div', { class: 'glass' }, form),
-    h('div', { class: 'note' }, 'ເບິ່ງການມາຮຽນ ແລະ ຂໍລາໄດ້ທີ່ນີ້', h('br'), 'ຖ້າລືມລະຫັດຜ່ານໃຫ້ຖາມ ຄະນະຫ້ອງ')));
+    h('div', { class: 'note' }, 'ເບິ່ງການມາຮຽນ ແລະ ຂໍລາໄດ້ທີ່ນີ້', h('br'), 'ຖ້າລືມລະຫັດຜ່ານ ໃຫ້ຖາມຄະນະຫ້ອງ')));
 }
 
 function loginMessage(r){
   if (r && r.status === 'locked') return 'ໃສ່ຜິດຫຼາຍເກີນໄປ ກະລຸນາລອງໃໝ່ອີກ 10 ນາທີ';
-  return 'ລະຫັດນັກຮຽນ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ';
+  return 'DI ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ';
 }
 function netMessage(e){
   if (e && e.message === 'noapi') return 'ຍັງບໍ່ໄດ້ຕັ້ງລິ້ງລະບົບ (API_URL) ໃນໄຟລ໌ student.html';
@@ -269,12 +275,12 @@ function banner(st){
     cls = 'b-gray'; t1 = 'ຍັງບໍ່ມີຂໍ້ມູນການຮຽນ'; t2 = 'ເມື່ອມີການເຊັກຊື່ ສະຖິຕິຈະສະແດງຢູ່ບ່ອນນີ້';
   } else if (st.absentPct > st.maxAbsentPct){
     cls = 'b-bad'; t1 = 'ເກີນເກນການຂາດຮຽນ';
-    t2 = 'ຂາດ ' + Math.round(st.absentPct) + '% ເກີນເກນ ' + st.maxAbsentPct + '% ກະລຸນາຕິດຕໍ່ຄະນະຫ້ອງ';
+    t2 = 'ຂາດ ' + Math.round(st.absentPct) + '% ເກີນເກນ ' + st.maxAbsentPct + '% ສາມາດປືກສາຄະນະຫ້ອງໄດ້';
   } else if (st.canMiss <= 1){
     cls = 'b-warn'; t1 = 'ໃກ້ເຖິງເກນການຂາດຮຽນ';
     t2 = st.canMiss <= 0 ? 'ບໍ່ຄວນຂາດຕື່ມອີກ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)' : 'ຂາດໄດ້ອີກພຽງ 1 ຄາບ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)';
   } else {
-    cls = 'b-ok'; t1 = 'ຢູ່ໃນເກນດີ';
+    cls = 'b-ok'; t1 = 'ຢູ່ໃນເກນປອດໄພ';
     t2 = 'ຂາດໄດ້ອີກ ' + st.canMiss + ' ຄາບ (ເກນຂາດສູງສຸດ ' + st.maxAbsentPct + '%)';
   }
   return h('div', { class: 'banner ' + cls }, h('b', null, t1), h('span', null, t2));
@@ -287,21 +293,68 @@ function itemRow(it){
     statusPill(it.status));
 }
 
+// ---------- ການ໌ດສະຫຼຸບການຂາດເດືອນນີ້ (ແທນວົງມົນ) ----------
+function monthCard(){
+  var m = S.me, sched = m.sched || {}, mset = {};
+  Object.keys(sched).forEach(function(k){ mset[k] = 1; });
+  m.items.forEach(function(i){ if (i.date) mset[i.date.slice(0, 7)] = 1; });
+  var months = Object.keys(mset).sort().reverse();
+  if (!S.homeMonth || months.indexOf(S.homeMonth) < 0) S.homeMonth = months[0];
+  var mk = S.homeMonth, p = /^(\d{4})-(\d{2})$/.exec(mk || '');
+  var mname = p ? LAO_MONTHS[+p[2] - 1] + ' ' + p[1] : '';
+  var by = {};
+  m.items.slice().reverse().forEach(function(i){          // ເກົ່າ -> ໃໝ່
+    if (i.date.slice(0, 7) !== mk) return;
+    (by[i.subject] = by[i.subject] || []).push(i.status);
+  });
+  var counts = sched[mk] || {}, names = (m.schedOrder || []).slice();
+  Object.keys(by).forEach(function(n){ if (names.indexOf(n) < 0) names.push(n); });
+  var P = 0, A = 0, L = 0, rows = [];
+  names.forEach(function(n){
+    var st = by[n] || [], tot = Math.max(counts[n] || 0, st.length);
+    if (!tot) return;
+    var a = 0;
+    st.forEach(function(x){ if (x === 'present') P++; else if (x === 'absent'){ A++; a++; } else L++; });
+    var dots = h('div', { class: 'dots' });
+    for (var i = 0; i < tot; i++){
+      var c = i < st.length ? (st[i] === 'present' ? 'ok' : st[i] === 'absent' ? 'bad' : 'lv') : '';
+      dots.appendChild(h('i', { class: 'dt ' + c }));
+    }
+    rows.push(h('div', { class: 'sj' + (a ? ' w' : '') },
+      h('div', { class: 'sjh' }, h('div', { class: 'b t15' }, n),
+        h('div', { style: 'white-space:nowrap' }, h('b', { style: 'font-size:20px;color:' + (a ? '#b42318' : '#15803d') }, a), h('span', { class: 'muted t15' }, '/' + tot))),
+      dots));
+  });
+  var card = h('div', { class: 'card' },
+    h('div', { class: 'mh' }, h('div', { class: 'b', style: 'font-size:17px' }, 'ການຂາດຮຽນເດືອນນີ້'), h('div', { class: 'pill p-lv' }, mname)));
+  if (months.length > 1){
+    var chips = h('div', { class: 'chips', style: 'margin:8px 0;overflow-x:auto;flex-wrap:nowrap' });
+    months.forEach(function(k){
+      var q = /^(\d{4})-(\d{2})$/.exec(k), on = k === mk;
+      chips.appendChild(h('button', { type: 'button', class: 'chip' + (on ? ' on' : ''), 'aria-pressed': on ? 'true' : 'false', style: 'white-space:nowrap', onclick: function(){ S.homeMonth = k; render(); } }, LAO_MONTHS[+q[2] - 1] + ' ' + q[1]));
+    });
+    card.appendChild(chips);
+  }
+  card.appendChild(h('div', { class: 'tri' },
+    h('div', null, h('b', { style: 'color:#b42318' }, A), h('span', { class: 't13' }, 'ຂາດ (ຄັ້ງ)')),
+    h('div', null, h('b', { style: 'color:#15803d' }, P), h('span', { class: 't13' }, 'ມາຮຽນ (ຄັ້ງ)')),
+    h('div', null, h('b', { style: 'color:#1e3a8a' }, L), h('span', { class: 't13' }, 'ລາ (ຄັ້ງ)'))));
+  if (!rows.length) card.appendChild(h('div', { class: 'empty' }, 'ຍັງບໍ່ມີຂໍ້ມູນເດືອນນີ້'));
+  else rows.forEach(function(r){ card.appendChild(r); });
+  card.appendChild(h('div', { class: 'lg' },
+    h('span', null, h('i', { style: 'background:#22a05a' }), 'ມາ'), h('span', null, h('i', { style: 'background:#e5584b' }), 'ຂາດ'),
+    h('span', null, h('i', { style: 'background:#3b6fd8' }), 'ລາ'), h('span', null, h('i', { style: 'background:#dfe5f1' }), 'ຍັງບໍ່ເຖິງ')));
+  card.appendChild(h('div', { class: 'muted', style: 'font-size:12px;margin-top:8px' }, 'ເລກ ຂາດ/ທັງເດືອນ ນັບຕາມຕາຕະລາງຮຽນ · ຄາບທີ່ລາອະນຸມັດ ບໍ່ນັບເປັນການຂາດ'));
+  return card;
+}
+
 function viewHome(){
-  var m = S.me, st = m.stats, p = st.pct;
-  var deg = (p === null || p === undefined) ? 0 : p;
+  var m = S.me, st = m.stats;
   var root = h('div', null);
   root.appendChild(h('div', { class: 'top' },
     h('div', null, h('div', { class: 'muted t15' }, 'ສະບາຍດີ'), h('div', { class: 'name' }, m.name), h('div', { class: 'muted sm' }, 'ລະຫັດ ' + m.code)),
     h('button', { class: 'icon', type: 'button', 'aria-label': 'ໂຫຼດຂໍ້ມູນໃໝ່', onclick: refresh }, ico('<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>', 22))));
-  root.appendChild(h('div', { class: 'card' },
-    h('div', { class: 'ring', style: 'background:conic-gradient(#2a62c9 0 ' + deg + '%, #d5e0f5 ' + deg + '% 100%)' },
-      h('i', null, h('b', null, pctText(p)), h('span', { class: 'muted t15' }, 'ມາຮຽນ'))),
-    h('div', { class: 'muted sm', style: 'text-align:center' }, 'ຈາກທັງໝົດ ' + st.total + ' ຄາບ (ຄາບທີ່ລາອະນຸມັດ ບໍ່ນັບເປັນການຂາດ)'),
-    h('div', { class: 'tri' },
-      h('div', null, h('b', { style: 'color:#15803d' }, st.present), h('span', { class: 't13' }, 'ມາຮຽນ (ຄາບ)')),
-      h('div', null, h('b', { style: 'color:#b42318' }, st.absent), h('span', { class: 't13' }, 'ຂາດ (ຄາບ)')),
-      h('div', null, h('b', { style: 'color:#1e3a8a' }, st.leave), h('span', { class: 't13' }, 'ລາ (ຄາບ)')))));
+  root.appendChild(monthCard());
   root.appendChild(banner(st));
 
   var pend = m.leaves.filter(function(l){ return l.status === 'pending'; }).length;
@@ -318,10 +371,46 @@ function viewHome(){
 // ---------- 2) ວິຊາ ----------
 function viewSubjects(){
   var m = S.me, root = h('div', null);
-  root.appendChild(h('div', { style: 'margin-bottom:12px' }, h('h1', { class: 'h1' }, 'ວິຊາຮຽນ'), h('div', { class: 'muted sm' }, 'ການມາຮຽນແຍກຕາມວິຊາ · ທັງໝົດ ' + m.subjects.length + ' ວິຊາ')));
-  if (!m.subjects.length){ root.appendChild(h('div', { class: 'empty' }, 'ຍັງບໍ່ມີຂໍ້ມູນ')); return root; }
+  // ເດືອນທີ່ມີຂໍ້ມູນ (ໃໝ່ສຸດກ່ອນ)
+  var mset = {};
+  m.items.forEach(function(i){ if (i.date) mset[i.date.slice(0, 7)] = 1; });
+  var months = Object.keys(mset).sort().reverse();
+  if (S.subMonth === undefined) S.subMonth = months.length ? months[0] : 'all';
+  if (S.subMonth !== 'all' && months.indexOf(S.subMonth) < 0) S.subMonth = 'all';
+
+  // ຄິດໄລ່ຕໍ່ວິຊາ (ແຕ່ລະວິຊາແຍກກັນ ເຊັ່ນ Statistics (L) ກັບ (T)) ຕາມເດືອນທີ່ເລືອກ
+  var subjects;
+  if (S.subMonth === 'all') subjects = m.subjects;
+  else {
+    var by = {}, order = [];
+    m.items.forEach(function(i){
+      if (i.date.slice(0, 7) !== S.subMonth) return;
+      var x = by[i.subject];
+      if (!x){ x = by[i.subject] = { name: i.subject, present: 0, absent: 0, leave: 0 }; order.push(x); }
+      if (i.status === 'present') x.present++; else if (i.status === 'absent') x.absent++; else if (i.status === 'leave') x.leave++;
+    });
+    subjects = order.map(function(x){
+      var t = x.present + x.absent;
+      x.pct = t ? x.present * 100 / t : null;
+      x.absentPct = t ? x.absent * 100 / t : 0;
+      return x;
+    }).sort(function(a, b){ return b.absent - a.absent || (a.name < b.name ? -1 : 1); });
+  }
+
+  var monthName = function(k){ var p = /^(\d{4})-(\d{2})$/.exec(k); return p ? LAO_MONTHS[+p[2] - 1] + ' ' + p[1] : k; };
+  root.appendChild(h('div', { style: 'margin-bottom:12px' }, h('h1', { class: 'h1' }, 'ວິຊາຮຽນ'),
+    h('div', { class: 'muted sm' }, 'ການມາຮຽນແຍກຕາມວິຊາ · ' + (S.subMonth === 'all' ? 'ທັງໝົດ' : monthName(S.subMonth)) + ' · ' + subjects.length + ' ວິຊາ')));
+  if (months.length){
+    var chips = h('div', { class: 'chips', style: 'margin-bottom:10px;overflow-x:auto;flex-wrap:nowrap' });
+    months.concat(['all']).forEach(function(k){
+      var on = S.subMonth === k;
+      chips.appendChild(h('button', { type: 'button', class: 'chip' + (on ? ' on' : ''), 'aria-pressed': on ? 'true' : 'false', style: 'white-space:nowrap', onclick: function(){ S.subMonth = k; render(); } }, k === 'all' ? 'ທັງໝົດ' : monthName(k)));
+    });
+    root.appendChild(chips);
+  }
+  if (!subjects.length){ root.appendChild(h('div', { class: 'empty' }, 'ຍັງບໍ່ມີຂໍ້ມູນ')); return root; }
   var list = h('div', { class: 'stack' });
-  m.subjects.forEach(function(s){
+  subjects.forEach(function(s){
     var warn = s.absentPct > m.stats.maxAbsentPct;
     var tot = s.present + s.absent;
     var sub = 'ມາ ' + s.present + ' / ' + tot + ' ຄາບ · ຂາດ ' + s.absent + (s.leave ? ' · ລາ ' + s.leave : '') + (warn ? ' · ຄວນລະວັງ' : '');
